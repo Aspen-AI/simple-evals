@@ -1,8 +1,6 @@
--`pip3 install venv`
-- or
-- `sudo apt install python3.12-venv`
+Steps to get simple-eval running
 
-
+- `pip3 install venv` or `sudo apt install python3.12-venv`
 
 - `mkdir .virtualenvs`
 - `cd .virtualenvs`
@@ -11,5 +9,5 @@
 - `pip3 install pandas jinja2 blobfile scipy human_eval anthropic openai`
 
 Below works because it's a public repo
--`cd ~/GitHub`
--`git clone https://github.com/Aspen-AI/simple-evals.git`
+- `cd ~/GitHub`
+- `git clone https://github.com/Aspen-AI/simple-evals.git`
