@@ -13,3 +13,5 @@ Below works because it's a public repo
 - `git clone https://github.com/Aspen-AI/simple-evals.git`
 
 `export OPENAI_API_KEY=sk-proj-ZwG...` (insert actual OPENAI key here)
+Modify code in samples
+python -m simple-evals.demo
