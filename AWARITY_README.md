@@ -18,6 +18,9 @@ Modify code in samples, e.g. in `simple-evals/sampler/o1_chat_completion_sampler
 
 `api_key=os.environ.get("OPENAI_API_KEY")  # please set your API_KEY`
 
-Finally, run
+Finally, install the azure-cli and run
 
-`python -m simple-evals.demo`
+- `curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash`
+- there is an issue with blob.BlobFile("https..."), in simpleqa_eval line 104, so I've replaced that line with wget(url, bar=None)
+-  -- if BlobFile is fixed, this may be necessary`az login` - will request you to open a browser with a key
+- `python -m simple-evals.demo`
