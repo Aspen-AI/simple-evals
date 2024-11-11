@@ -9,7 +9,7 @@ import re
 from typing import Optional
 
 import blobfile as bf
-
+import wget
 from . import common
 from .mmlu_eval import HTML_JINJA
 from .types import Eval, EvalResult, SamplerBase, SingleEvalResult
@@ -109,7 +109,8 @@ def score_mgsm(target: str, prediction: str) -> bool:
 def get_lang_examples(lang: str) -> list[dict[str, str]]:
     fpath = LANG_TO_FPATH[lang]
     examples = []
-    with bf.BlobFile(fpath, "r") as f:
+#    with bf.BlobFile(fpath, "r") as f:
+    with open(wget.download(fpath, "r", bar=None)) as f:
         for line in f:
             inputs, targets = line.strip().split("\t")
             if "." in targets:

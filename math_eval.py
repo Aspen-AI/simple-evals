@@ -9,6 +9,7 @@ import re
 from typing import Literal
 
 import blobfile as bf
+import wget
 import pandas
 
 from . import common
@@ -33,10 +34,14 @@ class MathEval(Eval):
         split: Literal["math_test", "math_500_test"] = "math_test",
     ):
         df = pandas.read_csv(
-            bf.BlobFile(f"https://openaipublic.blob.core.windows.net/simple-evals/{split}.csv")
+#            bf.BlobFile(f"https://openaipublic.blob.core.windows.net/simple-evals/{split}.csv")
+            wget.download(f"https://openaipublic.blob.core.windows.net/simple-evals/{split}.csv", bar=None)
         )
         examples = [row.to_dict() for _, row in df.iterrows()]
         if num_examples:
+            print(f"n_repeats provided in MathEval = {n_repeats}") # CHF
+            n_repeats = 1
+            print(f"n_repeats set to in MathEval = {n_repeats}") # CHF
             assert n_repeats == 1, "n_repeats only supported for num_examples = None"
             rng = random.Random(0)
             examples = rng.sample(examples, num_examples)

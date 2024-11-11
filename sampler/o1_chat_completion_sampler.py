@@ -1,6 +1,6 @@
 import time
 from typing import Any
-
+import os
 import openai
 from openai import OpenAI
 
@@ -17,7 +17,8 @@ class O1ChatCompletionSampler(SamplerBase):
     ):
         self.api_key_name = "OPENAI_API_KEY"
         self.client = OpenAI()
-        # using api_key=os.environ.get("OPENAI_API_KEY")  # please set your API_KEY
+        # using
+        api_key=os.environ.get("OPENAI_API_KEY")  # please set your API_KEY
         self.model = model
         self.image_format = "url"
 

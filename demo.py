@@ -22,7 +22,8 @@ from .sampler.claude_sampler import ClaudeCompletionSampler, CLAUDE_SYSTEM_MESSA
 
 def main():
     debug = True
-    samplers = {
+    
+    all_samplers = {
         # chatgpt models:
         "o1-preview": O1ChatCompletionSampler(
             model="o1-preview",
@@ -70,25 +71,38 @@ def main():
                 return MMLUEval(num_examples=1 if debug else 2500)
             case "math":
                 return MathEval(
-                    equality_checker=equality_checker, num_examples=5 if debug else 2500
+#                    equality_checker=equality_checker, num_examples=5 if debug else 2500
+                    equality_checker=equality_checker, num_examples=TOTAL_SAMPLES
                 )
             case "gpqa":
                 return GPQAEval(n_repeats=10 if debug else 1, num_examples=5 if debug else None)
             case "mgsm":
                 return MGSMEval(num_examples_per_lang=10 if debug else 250)
             case "drop":
-                return DropEval(num_examples=10 if debug else 2000, train_samples_per_prompt=3)
+#                return DropEval(num_examples=10 if debug else 2000, train_samples_per_prompt=3)
+                return DropEval(num_examples=TOTAL_SAMPLES, train_samples_per_prompt=3)
             case "humaneval":
                 return HumanEval(num_examples=10 if debug else None)
             case "simpleqa":
                 return SimpleQAEval(
                     grader_model = grading_sampler, 
-                    num_examples=10 if debug else 4326)
+                    num_examples=TOTAL_SAMPLES)
+#                    num_examples=10 if debug else 4326)
             case _:
                 raise Exception(f"Unrecoginized eval type: {eval_name}")
 
+    #####################
+    # CHF Control area
+    #####################
+    #['o1-preview', 'o1-mini', 'gpt-4-turbo-2024-04-09_assistant', 'gpt-4-turbo-2024-04-09_chatgpt', 'gpt-4o_assistant', 'gpt-4o_chatgpt', 'gpt-4o-mini-2024-07-18']:
+    TOTAL_SAMPLES = 300
+    samplers = {}
+    for key in all_samplers:
+        if key in ['gpt-4o-mini-2024-07-18']:
+            samplers[key] = all_samplers[key]
+
     evals = {
-        eval_name: get_evals(eval_name) for eval_name in ["simpleqa", "mmlu", "math", "gpqa", "mgsm", "drop"]
+        eval_name: get_evals(eval_name) for eval_name in ["simpleqa", "math"] # ["simpleqa", "mmlu", "math", "gpqa", "mgsm", "drop"]
     }
     print(evals)
     debug_suffix = "_DEBUG" if debug else ""
