@@ -43,11 +43,12 @@ class O1ChatCompletionSampler(SamplerBase):
         trial = 0
         while True:
             try:
+
                 response = self.client.chat.completions.create(
                     model=self.model,
                     messages=message_list,
                 )
-                return response.choices[0].message.content
+
             # NOTE: BadRequestError is triggered once for MMMU, please uncomment if you are reruning MMMU
             except openai.BadRequestError as e:
                 print("Bad Request Error", e)

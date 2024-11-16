@@ -115,6 +115,7 @@ class SimpleQAEval(Eval):
         self.grader_model = grader_model
 
     def grade_sample(self, question: str, target: str, predicted_answer: str) -> str:
+
         grader_prompt = GRADER_TEMPLATE.format(
             question=question,
             target=target,
@@ -125,6 +126,16 @@ class SimpleQAEval(Eval):
             self.grader_model._pack_message(content=grader_prompt, role="user")
         ]
         grading_response = self.grader_model(prompt_messages)
+#         print(f'''
+# --------------------------------------------------------------
+# question: {question}
+
+# target: {target}
+
+# predicted_answer: {predicted_answer}
+
+# response: {grading_response}
+# --------------------------------------------------------------''')
         
         match = re.search(r"(A|B|C)", grading_response)
         return match.group(0) if match else "C"  # Default to "NOT_ATTEMPTED" if no match
@@ -160,7 +171,8 @@ class SimpleQAEval(Eval):
                 })
 
             # Run evaluation and collect results
-            results = common.map_with_progress(fn, self.examples)
+            results = common.map_with_progress(fn, self.examples, num_threads=5)
+            # results = common.map(fn, self.examples)
 
             # Aggregate metrics
             aggregate_metrics = {

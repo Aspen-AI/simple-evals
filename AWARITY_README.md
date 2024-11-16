@@ -6,7 +6,7 @@ Steps to get simple-eval running
 - `cd .virtualenvs`
 - `python3 -m venv simple-evals`
 - `source .virtualenvs/simple-evals/bin/activate`
-- `pip3 install pandas jinja2 blobfile scipy human_eval anthropic openai tabulate`
+- `pip3 install pandas jinja2 blobfile scipy human_eval anthropic openai tabulate tiktoken`
 
 Below works because it's a public repo
 - `cd ~/GitHub`
