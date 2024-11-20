@@ -23,3 +23,8 @@ Finally, install the azure-cli and run
 - there is an issue with **blob.BlobFile**("https..."), in simpleqa_eval line 104, so I've replaced that line with **wget**(url, bar=None)
 -  -- if BlobFile is fixed, this may be necessary`az login` - will request you to open a browser with a key
 - `python -m simple-evals.demo`
+
+
+avalanche ingest awarity_catalog/ --uri awarity_input/*
+awareness --uri http://awarity.ai --model hybrid query "what time is it"
+awareness query "what does this company do" --uri "https://awarity.ai" --crawl-depth 1
